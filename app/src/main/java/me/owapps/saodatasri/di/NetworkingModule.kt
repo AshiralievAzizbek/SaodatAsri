@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import me.owapps.saodatasri.data.remote.BooksService
 import me.owapps.saodatasri.repository.BooksRepository
 import me.owapps.saodatasri.util.Constants.BASE_URL
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkingModule {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -41,8 +42,10 @@ object NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideBooksRepository(): BooksRepository =
-        BooksRepository(provideApiService(), provideResponseHandler())
+    fun provideBooksRepository(
+        booksService: BooksService,
+        responseHandler: ResponseHandler
+    ): BooksRepository = BooksRepository(booksService, responseHandler)
 
 }
 

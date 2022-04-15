@@ -32,6 +32,7 @@ class BooksAdapter(private val onBookClickListener: View.OnClickListener) :
             booksList.clear()
             booksList.addAll(list)
         }
+        notifyDataSetChanged()
     }
 
 }

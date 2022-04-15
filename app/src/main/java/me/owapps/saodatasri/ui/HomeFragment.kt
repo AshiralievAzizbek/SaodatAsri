@@ -1,22 +1,23 @@
 package me.owapps.saodatasri.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import me.owapps.saodatasri.databinding.HomeFragmentBinding
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var _binding: HomeFragmentBinding
     private val mBinding get() = _binding
 
-    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var viewModel: HomeViewModel
 
 
     override fun onCreateView(
@@ -29,6 +30,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
         val onBookClickListener = View.OnClickListener {
             Toast.makeText(requireContext(), "book clicked", Toast.LENGTH_SHORT).show()

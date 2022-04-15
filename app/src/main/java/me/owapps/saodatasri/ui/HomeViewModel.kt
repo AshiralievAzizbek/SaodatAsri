@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.owapps.saodatasri.data.entities.Book
 import me.owapps.saodatasri.repository.BooksRepository
+import javax.inject.Inject
 
-
-class HomeViewModel(private val booksRepository: BooksRepository) :
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val booksRepository: BooksRepository) :
     ViewModel() {
 
 
