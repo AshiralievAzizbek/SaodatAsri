@@ -3,6 +3,7 @@ package me.owapps.saodatasri.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import me.owapps.saodatasri.R
 import me.owapps.saodatasri.data.entities.Book
@@ -26,13 +27,21 @@ class BooksAdapter(private val onBookClickListener: View.OnClickListener) :
     override fun getItemCount() = booksList.size
 
     fun setList(list: List<Book>) {
-        if (booksList.isEmpty())
+        if (booksList.isEmpty()) {
             booksList.addAll(list)
-        else {
+            notifyItemAdded(list)
+        } else {
             booksList.clear()
             booksList.addAll(list)
+            notifyItemAdded(list)
         }
-        notifyDataSetChanged()
+
+    }
+
+    private fun notifyItemAdded(list: List<Book>) {
+        for (book in list) {
+            notifyItemInserted(book.position)
+        }
     }
 
 }
@@ -42,6 +51,9 @@ class BookViewHolder(
     private val onBookClickListener: View.OnClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(book: Book) {
+        binding.ivBookImage.setImageDrawable(
+            ContextCompat.getDrawable(itemView.context, R.drawable.temporary_cards_bg)
+        )
         binding.tvBookName.text = book.bookName
         binding.tvBookNumber.text =
             itemView.resources.getString(R.string.book_number, book.position)

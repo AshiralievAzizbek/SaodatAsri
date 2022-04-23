@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/player_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="?actionBarSize"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_sheet_peak"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="#26ADE2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/audio_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/peak_previous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lorem ipsumLorem ipsum" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/audio_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="#CCFFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/peak_previous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/audio_name"
+            tools:text="Lorem ipsum" />
+
+        <ImageView
+            android:id="@+id/peak_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/button_previous_description"
+            android:src="@drawable/ic_blue_previous"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/peak_play_or_pause"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/peak_play_or_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="@string/button_play_or_pause_description"
+            android:src="@drawable/ic_blue_play"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/peak_next"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/peak_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/button_next_description"
+            android:src="@drawable/ic_blue_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <ImageView
+                android:id="@+id/image_back"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="@string/app_name"
+                android:padding="14dp"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"
+                tools:ignore="NewApi" />
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/light_blue"
+                android:textSize="16sp"
+                tools:text="Bottom sheet dialog eddy " />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/audio_image"
+        android:layout_width="0dp"
+        android:layout_height="232dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/book_image"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize16dp"
+        tools:src="@drawable/temporary_cards_bg" />
+
+
+    <ImageView
+        android:id="@+id/volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="48dp"
+        android:contentDescription="@string/volume"
+        android:src="@drawable/ic_volume"
+        app:layout_constraintBottom_toTopOf="@+id/progress_seek_bar"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/volume_seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/volume"
+        app:layout_constraintEnd_toStartOf="@+id/repeat_mode"
+        app:layout_constraintStart_toEndOf="@id/volume"
+        app:layout_constraintTop_toTopOf="@id/volume" />
+
+    <ImageView
+        android:id="@+id/repeat_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:contentDescription="@string/repeat_mode"
+        android:padding="8dp"
+        android:src="@drawable/ic_baseline_repeat_24"
+        app:layout_constraintBottom_toBottomOf="@+id/volume_seek_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/volume_seek_bar" />
+
+    <TextView
+        android:id="@+id/playback_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:textColor="@color/light_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/repeat_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/repeat_mode"
+        tools:text="1x" />
+
+    <SeekBar
+        android:id="@+id/progress_seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="64dp"
+        android:max="100"
+        android:padding="2dp"
+        android:progress="30"
+        android:thumbTint="@color/light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/play_or_pause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/progress_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/progress_seek_bar"
+        app:layout_constraintEnd_toEndOf="@+id/progress_seek_bar"
+        tools:text="14:00" />
+
+    <TextView
+        android:id="@+id/progress_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/progress_seek_bar"
+        app:layout_constraintStart_toStartOf="@+id/progress_seek_bar"
+        tools:text="02:50" />
+
+    <ImageView
+        android:id="@+id/play_or_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:contentDescription="@string/button_play_or_pause_description"
+        android:padding="8dp"
+        android:src="@drawable/ic_blue_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:contentDescription="@string/button_next_description"
+        android:padding="8dp"
+        android:src="@drawable/ic_blue_next"
+        app:layout_constraintBottom_toBottomOf="@+id/play_or_pause"
+        app:layout_constraintStart_toEndOf="@+id/play_or_pause"
+        app:layout_constraintTop_toTopOf="@+id/play_or_pause" />
+
+    <ImageView
+        android:id="@+id/previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/button_previous_description"
+        android:padding="8dp"
+        android:src="@drawable/ic_blue_previous"
+        app:layout_constraintBottom_toBottomOf="@+id/play_or_pause"
+        app:layout_constraintEnd_toStartOf="@+id/play_or_pause"
+        app:layout_constraintTop_toTopOf="@+id/play_or_pause" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
