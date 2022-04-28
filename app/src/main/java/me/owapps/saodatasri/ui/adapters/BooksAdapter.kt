@@ -1,5 +1,6 @@
-package me.owapps.saodatasri.ui
+package me.owapps.saodatasri.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,22 +27,15 @@ class BooksAdapter(private val onBookClickListener: View.OnClickListener) :
 
     override fun getItemCount() = booksList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<Book>) {
         if (booksList.isEmpty()) {
             booksList.addAll(list)
-            notifyItemAdded(list)
         } else {
             booksList.clear()
             booksList.addAll(list)
-            notifyItemAdded(list)
         }
-
-    }
-
-    private fun notifyItemAdded(list: List<Book>) {
-        for (book in list) {
-            notifyItemInserted(book.position)
-        }
+        notifyDataSetChanged()
     }
 
 }

@@ -29,4 +29,6 @@
     <string name="volume">Volume</string>
     <string name="repeat_mode">Repeat mode</string>
     <string name="download_description">Download</string>
+    <string name="notification_channel_name">Saodat asri channel</string>
+    <string name="notification_channel_description">Saodat asri notification description</string>
 </resources>

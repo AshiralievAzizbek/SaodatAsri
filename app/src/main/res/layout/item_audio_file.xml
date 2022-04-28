@@ -32,12 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginStart="16dp"
+            android:ellipsize="marquee"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/length"
             app:layout_constraintStart_toEndOf="@+id/play_or_pause"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Some title" />
+            tools:text="Some title"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/chapter"
@@ -45,13 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="8dp"
-
             android:layout_marginStart="16dp"
+            android:ellipsize="marquee"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/length"
             app:layout_constraintStart_toEndOf="@+id/play_or_pause"
-            tools:text="Chapter 1" />
+            tools:text="Chapter 1"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/length"

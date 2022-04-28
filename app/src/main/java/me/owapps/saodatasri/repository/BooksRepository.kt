@@ -5,7 +5,6 @@ import me.owapps.saodatasri.data.entities.BooksResponse
 import me.owapps.saodatasri.data.remote.BooksService
 import me.owapps.saodatasri.util.Resource
 import me.owapps.saodatasri.util.ResponseHandler
-import java.lang.Exception
 import javax.inject.Inject
 
 @ActivityScoped
@@ -16,10 +15,13 @@ class BooksRepository @Inject constructor(
 
     suspend fun getBooks(): Resource<BooksResponse> {
         return try {
-            responseHandler.handleSuccess(booksService.fetchBooks())
+            val response = responseHandler.handleSuccess(booksService.fetchBooks())
+            response
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
     }
+
+
 
 }
