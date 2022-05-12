@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import me.owapps.saodatasri.data.entities.Raw
 import me.owapps.saodatasri.databinding.ItemAudioFileBinding
 
-class AudioItemsAdapter : RecyclerView.Adapter<AudioItemViewHolder>() {
+class AudioItemsAdapter(private val onItemClicked: (Raw) -> Unit) :
+    RecyclerView.Adapter<AudioItemViewHolder>() {
 
     private val items = arrayListOf<Raw>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioItemViewHolder {
         val binding =
             ItemAudioFileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AudioItemViewHolder(binding)
+        return AudioItemViewHolder(binding, onItemClicked)
     }
 
     override fun onBindViewHolder(holder: AudioItemViewHolder, position: Int) {
@@ -35,7 +35,10 @@ class AudioItemsAdapter : RecyclerView.Adapter<AudioItemViewHolder>() {
 
 }
 
-class AudioItemViewHolder(private val binding: ItemAudioFileBinding) :
+class AudioItemViewHolder(
+    private val binding: ItemAudioFileBinding,
+    private val onItemClicked: (Raw) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Raw) {
         binding.apply {
@@ -44,6 +47,11 @@ class AudioItemViewHolder(private val binding: ItemAudioFileBinding) :
             title.isSelected = true
             chapter.isSelected = true
         }
+
+        binding.playOrPause.setOnClickListener {
+            onItemClicked(item)
+        }
+
     }
 
 }

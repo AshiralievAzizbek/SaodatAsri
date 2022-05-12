@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import me.owapps.saodatasri.data.entities.Raw
 import me.owapps.saodatasri.databinding.AudioListFragmentBinding
 import me.owapps.saodatasri.ui.adapters.AudioItemsAdapter
 
@@ -34,7 +35,10 @@ class AudioListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        val adapter = AudioItemsAdapter()
+
+        val adapter = AudioItemsAdapter{ mediaItem: Raw ->
+            homeViewModel.playOrToggle(mediaItem)
+        }
         mBinding.audioItemsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         mBinding.audioItemsRecyclerView.adapter = adapter
 

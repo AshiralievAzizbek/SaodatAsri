@@ -6,4 +6,5 @@ object Constants {
     const val MEDIA_ROOT_ID = "saodat_asri_root_id"
     const val NOTIFICATION_ID = 101
     const val NOTIFICATION_CHANNEL_ID = "Saodat asri"
+    const val NETWORK_ERROR = "Network error"
 }
