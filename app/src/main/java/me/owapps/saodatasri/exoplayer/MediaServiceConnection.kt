@@ -7,11 +7,13 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import me.owapps.saodatasri.util.Constants.NETWORK_ERROR
 import me.owapps.saodatasri.util.Event
 import me.owapps.saodatasri.util.Resource
+import kotlin.math.log
 
 class MediaServiceConnection(context: Context) {
     private val _isConnected = MutableLiveData<Event<Resource<Boolean>>>()
@@ -29,7 +31,7 @@ class MediaServiceConnection(context: Context) {
     private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
 
 
-    private lateinit var mediaController: MediaControllerCompat
+    lateinit var mediaController: MediaControllerCompat
 
     private val mediaBrowser = MediaBrowserCompat(
         context,
@@ -39,9 +41,9 @@ class MediaServiceConnection(context: Context) {
         ),
         mediaBrowserConnectionCallback,
         null
-    )
-
-
+    ).apply {
+        connect()
+    }
 
 
     val transportControls: MediaControllerCompat.TransportControls
@@ -57,7 +59,10 @@ class MediaServiceConnection(context: Context) {
 
     inner class MediaBrowserConnectionCallback(private val context: Context) :
         MediaBrowserCompat.ConnectionCallback() {
+
         override fun onConnected() {
+            Log.d("XXXXX", "onConnected:${mediaBrowser.sessionToken} ")
+
             mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                 registerCallback(MediaControllerCallback())
             }
@@ -66,9 +71,13 @@ class MediaServiceConnection(context: Context) {
 
         override fun onConnectionSuspended() {
             _isConnected.postValue(Event(Resource.Error(false, "suspended")))
+            Log.d("XXXXX", "onConnectionSuspended:${mediaBrowser.sessionToken} ")
+
         }
 
         override fun onConnectionFailed() {
+            Log.d("XXXXX", "onConnectionFailed:${mediaBrowser.sessionToken} ")
+
             _isConnected.postValue(
                 Event(
                     Resource.Error(

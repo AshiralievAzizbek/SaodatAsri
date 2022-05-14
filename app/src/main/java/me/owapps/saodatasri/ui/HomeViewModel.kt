@@ -64,10 +64,11 @@ class HomeViewModel @Inject constructor(
                             _id = it.mediaId!!,
                             soundName = it.description.title.toString(),
                             description = it.description.subtitle.toString(),
-                            link = it.description.mediaUri.toString()
+                            link = it.description.mediaUri.toString(),
+                            position = children.indexOf(it) + 1
                         )
                     }
-                    _mediaItems.postValue(Resource.success(items))
+                    _mediaItems.postValue(Resource.Success(items))
                 }
             })
     }

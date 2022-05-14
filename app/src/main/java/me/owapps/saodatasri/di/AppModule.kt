@@ -15,7 +15,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMediaServiceConnection(@ApplicationContext context: Context): MediaServiceConnection =
+    fun provideMediaServiceConnection(@ApplicationContext context: Context) =
         MediaServiceConnection(context)
 
 }

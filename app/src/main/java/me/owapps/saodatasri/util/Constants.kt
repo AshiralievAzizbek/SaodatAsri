@@ -7,4 +7,5 @@ object Constants {
     const val NOTIFICATION_ID = 101
     const val NOTIFICATION_CHANNEL_ID = "Saodat asri"
     const val NETWORK_ERROR = "Network error"
+    const val METADATA_POSITION = "position"
 }

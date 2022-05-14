@@ -1,6 +1,7 @@
 package me.owapps.saodatasri.exoplayer
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -38,7 +39,7 @@ class PlayerService : MediaBrowserServiceCompat() {
     lateinit var mediaSource: MediaSource
 
     private val serviceJob = Job()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+    private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
 
     private lateinit var mediaSessionCompat: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
@@ -63,7 +64,7 @@ class PlayerService : MediaBrowserServiceCompat() {
         }
 
         val activityIntent = packageManager?.getLaunchIntentForPackage(packageName)?.let {
-            PendingIntent.getActivity(this, 0, it, 0)
+            PendingIntent.getActivity(this, 0, it, FLAG_MUTABLE)
         }
 
         mediaSessionCompat = MediaSessionCompat(this, SERVICE_TAG).apply {
