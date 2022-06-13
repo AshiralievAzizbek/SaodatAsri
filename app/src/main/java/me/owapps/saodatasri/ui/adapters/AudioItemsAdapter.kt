@@ -1,21 +1,21 @@
 package me.owapps.saodatasri.ui.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.owapps.saodatasri.data.entities.Raw
 import me.owapps.saodatasri.databinding.ItemAudioFileBinding
+import me.owapps.saodatasri.util.AudioItem
 
-class AudioItemsAdapter(private val onItemClicked: (Raw) -> Unit) :
+class AudioItemsAdapter(private val audioItem: AudioItem) :
     RecyclerView.Adapter<AudioItemViewHolder>() {
 
     private val items = arrayListOf<Raw>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioItemViewHolder {
         val binding =
             ItemAudioFileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AudioItemViewHolder(binding, onItemClicked)
+        return AudioItemViewHolder(binding, audioItem)
     }
 
     override fun onBindViewHolder(holder: AudioItemViewHolder, position: Int) {
@@ -37,7 +37,7 @@ class AudioItemsAdapter(private val onItemClicked: (Raw) -> Unit) :
 
 class AudioItemViewHolder(
     private val binding: ItemAudioFileBinding,
-    private val onItemClicked: (Raw) -> Unit
+    private val audioItem: AudioItem
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Raw) {
@@ -48,8 +48,12 @@ class AudioItemViewHolder(
             chapter.isSelected = true
         }
 
+        binding.download.setOnClickListener {
+            audioItem.onDownload(item)
+        }
+
         binding.playOrPause.setOnClickListener {
-            onItemClicked(item)
+            audioItem.onPlay(item)
         }
 
     }

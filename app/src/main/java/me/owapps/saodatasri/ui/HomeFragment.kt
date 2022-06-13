@@ -1,7 +1,6 @@
 package me.owapps.saodatasri.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.owapps.saodatasri.R
 import me.owapps.saodatasri.databinding.HomeFragmentBinding
 import me.owapps.saodatasri.ui.adapters.BooksAdapter
+import me.owapps.saodatasri.ui.viewmodels.PlayerViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     private lateinit var _binding: HomeFragmentBinding
     private val mBinding get() = _binding
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: PlayerViewModel
 
 
     override fun onCreateView(
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[PlayerViewModel::class.java]
 
         val onBookClickListener = View.OnClickListener {
             replaceFragment(AudioListFragment())

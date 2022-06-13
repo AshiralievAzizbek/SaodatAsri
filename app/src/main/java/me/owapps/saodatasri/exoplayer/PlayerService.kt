@@ -1,9 +1,11 @@
 package me.owapps.saodatasri.exoplayer
 
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_MUTABLE
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -24,6 +26,7 @@ import me.owapps.saodatasri.util.Constants.MEDIA_ROOT_ID
 import me.owapps.saodatasri.util.Constants.NETWORK_ERROR
 import javax.inject.Inject
 
+
 private const val SERVICE_TAG = "PlayerService"
 
 @AndroidEntryPoint
@@ -39,7 +42,7 @@ class PlayerService : MediaBrowserServiceCompat() {
     lateinit var mediaSource: MediaSource
 
     private val serviceJob = Job()
-    private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
+    private val serviceScope = CoroutineScope(serviceJob)
 
     private lateinit var mediaSessionCompat: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
@@ -59,12 +62,13 @@ class PlayerService : MediaBrowserServiceCompat() {
     override fun onCreate() {
         super.onCreate()
 
-        serviceScope.launch {
+
+        serviceScope.launch(Dispatchers.Main) {
             mediaSource.fetchMediaData()
         }
 
         val activityIntent = packageManager?.getLaunchIntentForPackage(packageName)?.let {
-            PendingIntent.getActivity(this, 0, it, FLAG_MUTABLE)
+            PendingIntent.getActivity(this, 0, it, FLAG_IMMUTABLE)
         }
 
         mediaSessionCompat = MediaSessionCompat(this, SERVICE_TAG).apply {
@@ -110,9 +114,12 @@ class PlayerService : MediaBrowserServiceCompat() {
         playNow: Boolean
     ) {
         val curSongIndex = if (currentPlayingSong == null) 0 else songs.indexOf(itemToPlay)
-        exoPlayer.prepare(mediaSource.asMediaSource(dataSourceFactory))
-        exoPlayer.seekTo(curSongIndex, 0L)
-        exoPlayer.playWhenReady = playNow
+        Handler(Looper.getMainLooper()).post {
+            exoPlayer.addMediaSource(mediaSource.asMediaSource(dataSourceFactory))
+            exoPlayer.prepare()
+            exoPlayer.seekTo(curSongIndex, 0L)
+            exoPlayer.playWhenReady = playNow
+        }
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {

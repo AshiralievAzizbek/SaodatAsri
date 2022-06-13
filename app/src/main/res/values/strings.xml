@@ -31,4 +31,15 @@
     <string name="download_description">Download</string>
     <string name="notification_channel_name">Saodat asri channel</string>
     <string name="notification_channel_description">Saodat asri notification description</string>
+    <string name="app_download_channel_name">Saodat Asri donwload channel</string>
+    <string name="app_download_channel_description">Saodat Asri fayl yuklash kanali</string>
+    <string name="download_live_unsupported">download live unpsupported</string>
+    <string name="download_start_error">download start error</string>
+    <string name="download_start_error_offline_license">dowload start error offline license</string>
+    <string name="error_drm_unsupported_before_api_18">error drm unsupported before api 18</string>
+    <string name="exo_download_description">exo_download_description</string>
+    <string name="track_selection_title">track_selection_title</string>
+    <string name="exo_track_selection_title_video">exo_track_selection_title_video</string>
+    <string name="exo_track_selection_title_audio">exo_track_selection_title_audio</string>
+    <string name="exo_track_selection_title_text">exo_track_selection_title_text</string>
 </resources>

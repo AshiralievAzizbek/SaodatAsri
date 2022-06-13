@@ -20,10 +20,13 @@
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout-v28/player_bottom_sheet.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/audio_list_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/exo_track_selection_dialog.xml" value="0.18" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/home_fragment.xml" value="0.3625" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/item_audio_file.xml" value="0.5" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/item_book.xml" value="0.33" />
         <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/player_bottom_sheet.xml" value="0.16" />
+        <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/splash_fragment.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Aziz/AndroidStudioProjects/SaodatAsri/app/src/main/res/layout/track_selection_dialog.xml" value="0.3625" />
       </map>
     </option>
   </component>

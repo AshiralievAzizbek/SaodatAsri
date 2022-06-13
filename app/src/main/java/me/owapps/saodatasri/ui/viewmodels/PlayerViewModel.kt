@@ -1,4 +1,4 @@
-package me.owapps.saodatasri.ui
+package me.owapps.saodatasri.ui.viewmodels
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
@@ -21,7 +21,7 @@ import me.owapps.saodatasri.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class PlayerViewModel @Inject constructor(
     private val booksRepository: BooksRepository,
     private val mediaServiceConnection: MediaServiceConnection
 ) :
@@ -83,7 +83,6 @@ class HomeViewModel @Inject constructor(
 
     fun playOrToggle(mediaItem: Raw, toggle: Boolean = false) {
         val isPrepared = playbackState.value?.isPrepared ?: false
-        Log.d("XXXXX", "playOrToggle: clicked ${playbackState.value} ")
         if (isPrepared && mediaItem._id == currentPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)) {
             playbackState.value?.let { playbackStateCompat ->
                 when {

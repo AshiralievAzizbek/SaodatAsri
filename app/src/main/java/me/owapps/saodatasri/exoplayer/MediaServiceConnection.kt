@@ -71,13 +71,9 @@ class MediaServiceConnection(context: Context) {
 
         override fun onConnectionSuspended() {
             _isConnected.postValue(Event(Resource.Error(false, "suspended")))
-            Log.d("XXXXX", "onConnectionSuspended:${mediaBrowser.sessionToken} ")
-
         }
 
         override fun onConnectionFailed() {
-            Log.d("XXXXX", "onConnectionFailed:${mediaBrowser.sessionToken} ")
-
             _isConnected.postValue(
                 Event(
                     Resource.Error(
