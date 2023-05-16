@@ -4,14 +4,14 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import me.owapps.saodatasri.data.entities.Raw
+import me.owapps.saodatasri.data.entities.book.Audio
 import me.owapps.saodatasri.databinding.ItemAudioFileBinding
 import me.owapps.saodatasri.util.AudioItem
 
 class AudioItemsAdapter(private val audioItem: AudioItem) :
     RecyclerView.Adapter<AudioItemViewHolder>() {
 
-    private val items = arrayListOf<Raw>()
+    private val items = arrayListOf<Audio>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioItemViewHolder {
         val binding =
             ItemAudioFileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,7 +25,7 @@ class AudioItemsAdapter(private val audioItem: AudioItem) :
     override fun getItemCount(): Int = items.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(list: List<Raw>) {
+    fun setItems(list: List<Audio>) {
         if (!list.isNullOrEmpty()) {
             items.clear()
             items.addAll(list)
@@ -40,10 +40,9 @@ class AudioItemViewHolder(
     private val audioItem: AudioItem
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: Raw) {
+    fun bind(item: Audio) {
         binding.apply {
-            title.text = item.soundName
-            chapter.text = item.description
+            title.text = item.name
             title.isSelected = true
             chapter.isSelected = true
         }

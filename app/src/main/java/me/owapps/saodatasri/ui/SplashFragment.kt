@@ -22,17 +22,6 @@ class SplashFragment : BaseFragment() {
         return inflater.inflate(R.layout.splash_fragment, container, false)
     }
 
-    //    : ArrayList<ArrayList<T>>
-    private fun <T> map(array: ArrayList<T>): ArrayList<ArrayList<T>> {
-        val result = ArrayList<ArrayList<T>>()
-        for (i in 0..array.lastIndex step 2) {
-            if (i + 1 <= array.lastIndex)
-                result.add(arrayListOf(array[i], array[i + 1]))
-            else
-                result.add(arrayListOf(array[i]))
-        }
-        return result
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

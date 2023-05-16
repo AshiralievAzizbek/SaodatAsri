@@ -1,8 +1,8 @@
 package me.owapps.saodatasri.util
 
-import me.owapps.saodatasri.data.entities.Raw
+import me.owapps.saodatasri.data.entities.book.Audio
 
 interface AudioItem {
-    fun onPlay(raw: Raw)
-    fun onDownload(raw: Raw)
+    fun onPlay(raw: Audio)
+    fun onDownload(raw: Audio)
 }

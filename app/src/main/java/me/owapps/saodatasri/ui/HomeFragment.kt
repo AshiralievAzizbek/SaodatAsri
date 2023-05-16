@@ -1,9 +1,11 @@
 package me.owapps.saodatasri.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -36,8 +38,10 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[PlayerViewModel::class.java]
 
-        val onBookClickListener = View.OnClickListener {
-            replaceFragment(AudioListFragment())
+        val onBookClickListener = { bookId: Int ->
+            val fragment = AudioListFragment()
+            fragment.arguments = bundleOf("book_id" to bookId)
+            replaceFragment(fragment)
         }
 
         val adapter = BooksAdapter(onBookClickListener)
@@ -45,11 +49,13 @@ class HomeFragment : Fragment() {
         mBinding.rvBooks.layoutManager = LinearLayoutManager(requireContext())
         mBinding.rvBooks.adapter = adapter
 
-        viewModel.fetchBooks()
-
         viewModel.mBooks.observe(viewLifecycleOwner) { books ->
+            Log.d("TAGGGGG", "onViewCreated:$books ")
             adapter.setList(books)
         }
+
+        viewModel.fetchBooks()
+
 
     }
 

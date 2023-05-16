@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import me.owapps.saodatasri.data.entities.Book
-import me.owapps.saodatasri.data.entities.Raw
+import me.owapps.saodatasri.data.entities.BookX
+import me.owapps.saodatasri.data.entities.book.Audio
 import me.owapps.saodatasri.exoplayer.MediaServiceConnection
 import me.owapps.saodatasri.exoplayer.isPlayEnabled
 import me.owapps.saodatasri.exoplayer.isPlaying
@@ -28,24 +28,44 @@ class PlayerViewModel @Inject constructor(
     ViewModel() {
 
 
-    private val _books = MutableLiveData<List<Book>>()
-    val mBooks: LiveData<List<Book>> get() = _books
-    private val _mediaItems: MutableLiveData<Resource<List<Raw>>> =
-        MutableLiveData<Resource<List<Raw>>>()
-    val mediaItems: LiveData<Resource<List<Raw>>> get() = _mediaItems
+    private val _books = MutableLiveData<List<BookX>>()
+    val mBooks: LiveData<List<BookX>> get() = _books
+    private val _mediaItems: MutableLiveData<Resource<List<Audio>>> =
+        MutableLiveData<Resource<List<Audio>>>()
+    val mediaItems: LiveData<Resource<List<Audio>>> get() = _mediaItems
 
     val isConnected = mediaServiceConnection.isConnected
     val networkError = mediaServiceConnection.networkError
     val currentPlayingSong = mediaServiceConnection.currentPlayingSong
     val playbackState = mediaServiceConnection.playbackState
 
+    private val _currentMediaItems = MutableLiveData<List<Audio>>()
+    val currentMediaItems: LiveData<List<Audio>> get() = _currentMediaItems
+
     fun fetchBooks() {
         viewModelScope.launch {
             val response = booksRepository.getBooks()
+            Log.d("TAGGGGG", "fetchBooks: ${response.data}")
             if (response.data != null)
-                _books.value = response.data.data
+                _books.value = response.data.data.book
         }
 
+    }
+
+    fun fetchAudiItemsByBookId(id: Int) {
+        Log.d("FFFFUUCCK", "fetchAudiItemsByBookId: some shit should happen$id ")
+        viewModelScope.launch {
+            val response = booksRepository.getBook(id)
+            when (response) {
+                is Resource.Error -> {
+                }
+                is Resource.Loading -> {
+                }
+                is Resource.Success -> {
+                    _currentMediaItems.postValue(response.data!!.data.audio)
+                }
+            }
+        }
     }
 
 
@@ -60,12 +80,13 @@ class PlayerViewModel @Inject constructor(
                 ) {
                     super.onChildrenLoaded(parentId, children)
                     val items = children.map {
-                        Raw(
+                        Audio(
                             _id = it.mediaId!!,
-                            soundName = it.description.title.toString(),
-                            description = it.description.subtitle.toString(),
-                            link = it.description.mediaUri.toString(),
-                            position = children.indexOf(it) + 1
+                            name = it.description.title.toString(),
+                            file = it.description.mediaUri.toString(),
+                            number = children.indexOf(it) + 1,
+                            duration = 0.0,
+                            size = 0
                         )
                     }
                     _mediaItems.postValue(Resource.Success(items))
@@ -81,7 +102,7 @@ class PlayerViewModel @Inject constructor(
         mediaServiceConnection.transportControls.skipToPrevious()
     }
 
-    fun playOrToggle(mediaItem: Raw, toggle: Boolean = false) {
+    fun playOrToggle(mediaItem: Audio, toggle: Boolean = false) {
         val isPrepared = playbackState.value?.isPrepared ?: false
         if (isPrepared && mediaItem._id == currentPlayingSong.value?.getString(METADATA_KEY_MEDIA_ID)) {
             playbackState.value?.let { playbackStateCompat ->

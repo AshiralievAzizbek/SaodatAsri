@@ -2,6 +2,7 @@ package me.owapps.saodatasri.repository
 
 import dagger.hilt.android.scopes.ActivityScoped
 import me.owapps.saodatasri.data.entities.BooksResponse
+import me.owapps.saodatasri.data.entities.book.BookResponse
 import me.owapps.saodatasri.data.remote.BooksService
 import me.owapps.saodatasri.util.Resource
 import me.owapps.saodatasri.util.ResponseHandler
@@ -22,6 +23,14 @@ class BooksRepository @Inject constructor(
         }
     }
 
+    suspend fun getBook(id: Int): Resource<BookResponse> {
+        return try {
+            val response = responseHandler.handleSuccess(booksService.fetchBook(id))
+            response
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
 
 
 }

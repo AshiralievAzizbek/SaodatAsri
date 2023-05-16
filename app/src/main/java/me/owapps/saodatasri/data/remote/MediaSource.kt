@@ -12,7 +12,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.owapps.saodatasri.data.entities.Raw
+import me.owapps.saodatasri.data.entities.book.Audio
 import me.owapps.saodatasri.data.remote.State.*
 import me.owapps.saodatasri.repository.BooksRepository
 import me.owapps.saodatasri.util.Constants
@@ -60,25 +60,25 @@ class MediaSource @Inject constructor(private val booksRepository: BooksReposito
         val allSongs = getAllSongs()
         songs = allSongs.map { raw ->
             Builder()
-                .putString(METADATA_KEY_ARTIST, raw.soundName)
+                .putString(METADATA_KEY_ARTIST, raw.name)
                 .putString(METADATA_KEY_MEDIA_ID, raw._id)
-                .putString(METADATA_KEY_TITLE, raw.soundName)
-                .putString(METADATA_KEY_DISPLAY_TITLE, raw.description)
-                .putString(METADATA_KEY_MEDIA_URI, Constants.BASE_URL + raw.link)
-                .putString(METADATA_KEY_DISPLAY_SUBTITLE, raw.description)
-                .putString(METADATA_KEY_DISPLAY_DESCRIPTION, raw.description)
+                .putString(METADATA_KEY_MEDIA_URI, raw.file)
                 .build()
         }
 
         state = STATE_INITIALIZED
     }
 
-    private suspend fun getAllSongs(): ArrayList<Raw> {
-        val songs = arrayListOf<Raw>()
+    private suspend fun getAllSongs(): ArrayList<Audio> {
+        val songs = arrayListOf<Audio>()
         val response = booksRepository.getBooks()
         if (response.data != null) {
-            for (book in response.data.data)
-                songs.addAll(book.raws)
+            for (book in response.data.data.book) {
+                val bookResponse = booksRepository.getBook(book.number)
+                bookResponse.data?.let {
+                    songs.addAll(it.data.audio)
+                }
+            }
         }
         return songs
     }

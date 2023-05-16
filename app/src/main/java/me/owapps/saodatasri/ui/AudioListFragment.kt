@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import me.owapps.saodatasri.data.entities.Raw
+import me.owapps.saodatasri.data.entities.book.Audio
 import me.owapps.saodatasri.databinding.AudioListFragmentBinding
 import me.owapps.saodatasri.databinding.PlayerBottomSheetBinding
 import me.owapps.saodatasri.ui.adapters.AudioItemsAdapter
@@ -49,25 +49,25 @@ class AudioListFragment : Fragment(), AudioItem {
             bottomSheet.audioName.text = it?.getText(MediaMetadataCompat.METADATA_KEY_ARTIST)
         }
 
-
+        val bookId = arguments?.getInt("book_id")
         val adapter = AudioItemsAdapter(this)
 
         mBinding.audioItemsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         mBinding.audioItemsRecyclerView.adapter = adapter
 
-        playerViewModel.mBooks.value.also {
-            if (!it.isNullOrEmpty())
-                adapter.setItems(it.first().raws)
+        playerViewModel.currentMediaItems.observe(viewLifecycleOwner) { items ->
+            adapter.setItems(items)
         }
 
+        playerViewModel.fetchAudiItemsByBookId(bookId?: 1)
 
     }
 
-    override fun onPlay(raw: Raw) {
+    override fun onPlay(raw: Audio) {
         playerViewModel.playOrToggle(raw)
     }
 
-    override fun onDownload(raw: Raw) {
+    override fun onDownload(raw: Audio) {
         audioListViewModel.download(raw, requireContext())
     }
 
